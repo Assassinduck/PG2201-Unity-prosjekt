@@ -3,9 +3,10 @@ using UnityEngine.UI;
 
 public class WeaponController : MonoBehaviour {
 	
-	public Transform prefab;
+	public GameObject groundHitPrefab;
+	public GameObject enemyHitPrefab;
 	public GameObject fpsCamera;
-	public float fireRate = 0.0f;
+	public float fireRate = 1.0f;
 	
 	// brukes av FPSController
 	public Animator wpAnimator;
@@ -25,16 +26,19 @@ public class WeaponController : MonoBehaviour {
 	
 	void Update() {
 		
+		// Hvis man kan skyte
 		if (Input.GetKey(KeyCode.Mouse0) && fireTimer == 0f) {
 			fireWeapon();
 			wpAnimator.SetBool("fire", true);
 			fireTimer = fireRate;
 		}
 		
+		// be om at skyte animasjonen kan stoppe
 		if (fireTimer < (fireRate / 2)) {
 			wpAnimator.SetBool("fire", false);
 		}
 		
+		// teller nedover og sikrer at fireTimer ikke går under 0f
 		if (fireTimer != 0f) {
 			fireTimer -= Time.deltaTime;
 			if (fireTimer < 0f) { 
@@ -50,10 +54,17 @@ public class WeaponController : MonoBehaviour {
 		RaycastHit hitInfo;
 		Vector3 localForward = fpsCamera.transform.TransformDirection(Vector3.forward);
 		
+		// sjekker om man treffer noe, og får hitInfo definert
 		if (Physics.Raycast(fpsCamera.transform.position, localForward, out hitInfo,
 			100f, Physics.AllLayers, QueryTriggerInteraction.Ignore)) {
 			
-			Instantiate(prefab, hitInfo.point, Quaternion.FromToRotation(Vector3.up, hitInfo.normal));
+			bool didHit = (hitInfo.collider.tag == "Enemy") ? true : false;
+
+			// lager et nytt objekt basert på prefab etter om man treffer fiende eller ikke
+			Instantiate(didHit ? enemyHitPrefab : groundHitPrefab, hitInfo.point,
+				Quaternion.FromToRotation(Vector3.up, hitInfo.normal));
+			
+			if (didHit) { hitInfo.collider.SendMessage("takeDamage", 1); }
 		}
 	}
 }

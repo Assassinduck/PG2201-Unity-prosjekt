@@ -1284,7 +1284,7 @@ GameObject:
   - component: {fileID: 904787229}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3904,7 +3904,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d74329861afff4bafc81fd14512d1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 893315773921123790, guid: d1fa7570638a4304db005ebfa94f32b1, type: 3}
+  groundHitPrefab: {fileID: 893315773921123786, guid: d1fa7570638a4304db005ebfa94f32b1,
+    type: 3}
+  enemyHitPrefab: {fileID: 7261168326494350039, guid: 618f5cd62a302574f87a1ec302486ae3,
+    type: 3}
   fpsCamera: {fileID: 932069885}
   fireRate: 1
   wpAnimator: {fileID: 0}
