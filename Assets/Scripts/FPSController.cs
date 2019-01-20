@@ -80,18 +80,13 @@ public class FPSController : MonoBehaviour {
 		
 		// hvis du holder nede space og er på bakken
 		if (Input.GetKey(KeyCode.Space) && isGrounded) {
-		   	newVelocity.y = 5.0f;
+		   	newVelocity.y = 4.5f;
 			prevGrounded = false;
 			wpCont.wpAnimator.SetInteger("state", 2);
 	   	} else {
 			// hvis man prøver å hoppe på første frame skjer ikke dette og da blir det
 			// ikke friksjon
 			prevGrounded = isGrounded ? true : false;
-		}
-		
-		// prioriter "fire" animasjonen
-		if (wpCont.wpAnimator.GetBool("fire")) {
-			wpCont.wpAnimator.SetInteger("state", 4);
 		}
 		
 		// setter rigidbody hastighet til en oppdatert hastighet

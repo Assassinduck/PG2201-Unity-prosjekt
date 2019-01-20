@@ -26,16 +26,16 @@ public class WeaponController : MonoBehaviour {
 	
 	void Update() {
 		
+		// be om at skyte animasjonen kan stoppe
+		if (fireTimer <= (fireRate - 0.1f)) {
+			wpAnimator.SetBool("fire", false);
+		}
+		
 		// Hvis man kan skyte
 		if (Input.GetKey(KeyCode.Mouse0) && fireTimer == 0f) {
 			fireWeapon();
 			wpAnimator.SetBool("fire", true);
 			fireTimer = fireRate;
-		}
-		
-		// be om at skyte animasjonen kan stoppe
-		if (fireTimer < (fireRate / 2)) {
-			wpAnimator.SetBool("fire", false);
 		}
 		
 		// teller nedover og sikrer at fireTimer ikke går under 0f
