@@ -10,6 +10,8 @@ public class WeaponController : MonoBehaviour {
 	
 	// brukes av FPSController
 	public Animator wpAnimator;
+
+	public Light fireLight;
 	
 	// weapon array
 	public int currentWeapon = 0;
@@ -25,16 +27,18 @@ public class WeaponController : MonoBehaviour {
 	}
 	
 	void Update() {
-		
+
 		// be om at skyte animasjonen kan stoppe
-		if (fireTimer <= (fireRate - 0.1f)) {
+		if (fireTimer <= (fireRate - 0.05f)) {
 			wpAnimator.SetBool("fire", false);
+			fireLight.intensity = 0.0f;
 		}
 		
 		// Hvis man kan skyte
 		if (Input.GetKey(KeyCode.Mouse0) && fireTimer == 0f) {
 			fireWeapon();
 			wpAnimator.SetBool("fire", true);
+			fireLight.intensity = 1.0f;
 			fireTimer = fireRate;
 		}
 		
